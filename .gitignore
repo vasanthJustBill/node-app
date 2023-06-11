@@ -1,4 +1,5 @@
 node_modules/
 dist/
+renderer
 database.sqlite
 .env
