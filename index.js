@@ -13,11 +13,16 @@ const createWindow = () => {
     },
   });
 
-  const startUrl = url.format({
-    pathname: path.join(__dirname, "renderer/build/index.html"),
-    protocol: "file:",
-    slashes: true,
-  });
+  let startUrl = "";
+  if (process.env.ENV == "development") {
+    startUrl = "http://localhost:3000";
+  } else {
+    startUrl = url.format({
+      pathname: path.join(__dirname, "renderer/build/index.html"),
+      protocol: "file:",
+      slashes: true,
+    });
+  }
 
   mainWindow.loadURL(startUrl);
 };
