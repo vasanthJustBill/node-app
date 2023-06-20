@@ -16,7 +16,7 @@ const fetchFirstCompany = async (req: Request, res: Response) => {
     console.error("Error fetching first company:", error);
     return res
       .status(500)
-      .json({ success: false, message: "Internal server error" });
+      .json({ success: false, message: "Internal server error", error: error });
   }
 };
 
