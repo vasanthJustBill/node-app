@@ -15,7 +15,7 @@
   },
   "scripts": {
     "build": "npx tsc",
-    "start": "electron-forge start",
+    "start": "npx tsc && electron-forge start",
     "electron": "electron .",
     "package": "electron-forge package",
     "make": "electron-forge make"

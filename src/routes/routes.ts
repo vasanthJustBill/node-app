@@ -1,9 +1,11 @@
 import { Router } from "express";
 import companyRouter from "./company.routes";
-import profiles from "./profile.routes";
+import partyRouter from "./party.routes";
+import menuRouter from "./menu.routes";
 
 const router = Router();
-router.use("/company", companyRouter);
-router.use("/profiles", profiles);
+router.use("/menus", menuRouter);
+router.use("/companies", companyRouter);
+router.use("/parties", partyRouter);
 
 export default router;

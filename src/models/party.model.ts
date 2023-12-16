@@ -1,15 +1,19 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "./sequelize";
+import Company from "./company.model";
 
 interface PartyAttributes {
   id: number;
   name: string;
   gstType: string;
   gstin: number;
-  contact: number;
-  email: string;
-  address: string;
-  state: string;
+  primaryContact: number;
+  alternateContact: number;
+  primaryEmail: string;
+  alternateEmail: string;
+  shippingAddress: string;
+  billingAddress: string;
+  companyId: number;
 }
 
 class Party extends Model<PartyAttributes> implements PartyAttributes {
@@ -17,10 +21,13 @@ class Party extends Model<PartyAttributes> implements PartyAttributes {
   public name!: string;
   public gstType!: string;
   public gstin!: number;
-  public contact: number;
-  public email: string;
-  public address: string;
-  public state: string;
+  public primaryContact: number;
+  public alternateContact: number;
+  public primaryEmail: string;
+  public alternateEmail: string;
+  public shippingAddress: string;
+  public billingAddress: string;
+  public companyId!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -72,15 +79,23 @@ class Party extends Model<PartyAttributes> implements PartyAttributes {
             },
           },
         },
-        contact: {
+        primaryContact: {
           type: DataTypes.BIGINT,
           validate: {
             isInt: {
-              msg: "Contact must be an integer",
+              msg: "Primary Contact must be an integer",
             },
           },
         },
-        email: {
+        alternateContact: {
+          type: DataTypes.BIGINT,
+          validate: {
+            isInt: {
+              msg: "Alternate Contact must be an integer",
+            },
+          },
+        },
+        primaryEmail: {
           type: DataTypes.STRING,
           validate: {
             isEmail: {
@@ -88,11 +103,31 @@ class Party extends Model<PartyAttributes> implements PartyAttributes {
             },
           },
         },
-        address: {
+        alternateEmail: {
+          type: DataTypes.STRING,
+          validate: {
+            isEmail: {
+              msg: "Invalid email format",
+            },
+          },
+        },
+        shippingAddress: {
           type: DataTypes.STRING,
         },
-        state: {
+        billingAddress: {
           type: DataTypes.STRING,
+        },
+        companyId: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          validate: {
+            notNull: {
+              msg: "Company ID is required",
+            },
+            notEmpty: {
+              msg: "Company ID cannot be empty",
+            },
+          },
         },
       },
       {
@@ -102,9 +137,17 @@ class Party extends Model<PartyAttributes> implements PartyAttributes {
       }
     );
   }
+
+  static associate(): void {
+    Party.belongsTo(Company, {
+      foreignKey: "companyId",
+      as: "company",
+    });
+  }
 }
 
 // Initialize the Party model
 Party.initModel();
+Party.associate();
 
 export default Party;

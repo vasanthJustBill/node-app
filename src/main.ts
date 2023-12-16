@@ -20,8 +20,8 @@ const createWindow = (): void => {
   });
 
   let startUrl = "";
-  if (process.env.ENV === "development" && false) {
-    startUrl = "http://localhost:3000";
+  if (process.env.ENV === "development") {
+    startUrl = "http://localhost:4200";
   } else {
     startUrl = url.format({
       pathname: path.join(__dirname, "../renderer/build/index.html"),

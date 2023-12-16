@@ -18,8 +18,8 @@ partyRouter.get("/:id", getPartyById);
 // POST create party
 partyRouter.post("/", createParty);
 
-// PUT update party
-partyRouter.put("/:id", updateParty);
+// PATCH update party
+partyRouter.patch("/:id", updateParty);
 
 // DELETE delete party
 partyRouter.delete("/:id", deleteParty);

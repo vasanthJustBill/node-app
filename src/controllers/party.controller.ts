@@ -16,7 +16,7 @@ export const getAllParties = async (req: Request, res: Response) => {
 // Create a party
 export const createParty = async (req: Request, res: Response) => {
   try {
-    const { name, gstType, gstin, contact, email, address, state } = req.body;
+    const { name, gstType, gstin, ...otherAttributes } = req.body;
 
     // Validate required fields
     if (!name || !gstType || !gstin) {
@@ -30,10 +30,7 @@ export const createParty = async (req: Request, res: Response) => {
       name,
       gstType,
       gstin,
-      contact,
-      email,
-      address,
-      state,
+      ...otherAttributes,
     });
 
     return res.status(201).json({ party: newParty });
@@ -70,7 +67,7 @@ export const getPartyById = async (req: Request, res: Response) => {
 export const updateParty = async (req: Request, res: Response) => {
   try {
     const partyId = req.params.id;
-    const { name, gstType, gstin, contact, email, address, state } = req.body;
+    const { name, gstType, gstin, ...otherAttributes } = req.body;
 
     // Validate required fields
     if (!name || !gstType || !gstin) {
@@ -85,10 +82,7 @@ export const updateParty = async (req: Request, res: Response) => {
         name,
         gstType,
         gstin,
-        contact,
-        email,
-        address,
-        state,
+        ...otherAttributes,
       },
       { where: { id: partyId } }
     );
