@@ -57,9 +57,14 @@ const seedFunction = async () => {
       sequence: 6,
     },
     {
+      title: "Stock",
+      link: "/stock",
+      sequence: 7,
+    },
+    {
       title: "Settings",
       link: "/settings",
-      sequence: 7,
+      sequence: 8,
     },
   ];
   await Menu.destroy({ where: {} });

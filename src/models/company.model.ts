@@ -16,6 +16,7 @@ interface CompanyAttributes {
   website: string;
   gstType: string;
   gstin: string;
+  sameAsShipping: boolean;
 }
 
 class Company extends Model<CompanyAttributes> implements CompanyAttributes {
@@ -32,6 +33,7 @@ class Company extends Model<CompanyAttributes> implements CompanyAttributes {
   public website: string;
   public gstType: string;
   public gstin: string;
+  public sameAsShipping: boolean;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -80,6 +82,9 @@ Company.init(
     },
     gstin: {
       type: DataTypes.STRING,
+    },
+    sameAsShipping: {
+      type: DataTypes.BOOLEAN,
     },
   },
   {

@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { ValidationError } from "sequelize";
 import Company from "../models/company.model";
 
-// Action 1: Fetch the first company
 export const getFirstCompany = async (req: Request, res: Response) => {
   try {
     const firstCompany = await Company.findOne({});
@@ -17,13 +16,27 @@ export const getFirstCompany = async (req: Request, res: Response) => {
   }
 };
 
-// Action 2: Create or update the first company
 export const createOrUpdateFirstCompany = async (
   req: Request,
   res: Response
 ) => {
   try {
-    const { name, description, ...otherAttributes } = req.body;
+    const {
+      id,
+      name,
+      description,
+      shippingAddress,
+      billingAddress,
+      primaryContact,
+      alternateContact,
+      primaryEmail,
+      alternateEmail,
+      businessType,
+      website,
+      gstType,
+      gstin,
+      sameAsShipping,
+    } = req.body;
 
     // Check if any company exists
     const existingCompany = await Company.findOne();
@@ -31,8 +44,22 @@ export const createOrUpdateFirstCompany = async (
     // If a company exists, update it; otherwise, create a new one
     if (existingCompany) {
       await Company.update(
-        { name, description, ...otherAttributes },
-        { where: { id: existingCompany.id } }
+        {
+          name,
+          description,
+          shippingAddress,
+          billingAddress,
+          primaryContact,
+          alternateContact,
+          primaryEmail,
+          alternateEmail,
+          businessType,
+          website,
+          gstType,
+          gstin,
+          sameAsShipping,
+        },
+        { where: { id } }
       );
 
       return res.status(200).json({ message: "Company updated successfully" });
@@ -43,13 +70,21 @@ export const createOrUpdateFirstCompany = async (
       }
 
       // Create a new company
-      const newCompany = await Company.create(
-        {
-          name,
-          description,
-          ...otherAttributes,
-        }
-      );
+      const newCompany = await Company.create({
+        name,
+        description,
+        shippingAddress,
+        billingAddress,
+        primaryContact,
+        alternateContact,
+        primaryEmail,
+        alternateEmail,
+        businessType,
+        website,
+        gstType,
+        gstin,
+        sameAsShipping,
+      });
 
       return res.status(201).json({ company: newCompany });
     }

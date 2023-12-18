@@ -40,7 +40,7 @@ const createWindow = (): void => {
 
 app.whenReady().then(() => {
   sequelize.authenticate().then(() => {
-    sequelize.sync().then(() => {
+    sequelize.sync({ force: true }).then(() => {
       console.log("Database connection has been established successfully.");
     });
   });

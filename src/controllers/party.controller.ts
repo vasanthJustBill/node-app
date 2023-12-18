@@ -16,8 +16,19 @@ export const getAllParties = async (req: Request, res: Response) => {
 // Create a party
 export const createParty = async (req: Request, res: Response) => {
   try {
-    const { name, gstType, gstin, ...otherAttributes } = req.body;
-
+    const {
+      name,
+      gstType,
+      gstin,
+      primaryContact,
+      alternateContact,
+      primaryEmail,
+      alternateEmail,
+      shippingAddress,
+      billingAddress,
+      companyId,
+      sameAsShipping,
+    } = req.body;
     // Validate required fields
     if (!name || !gstType || !gstin) {
       return res
@@ -30,7 +41,14 @@ export const createParty = async (req: Request, res: Response) => {
       name,
       gstType,
       gstin,
-      ...otherAttributes,
+      primaryContact,
+      alternateContact,
+      primaryEmail,
+      alternateEmail,
+      shippingAddress,
+      billingAddress,
+      companyId,
+      sameAsShipping,
     });
 
     return res.status(201).json({ party: newParty });
@@ -67,7 +85,19 @@ export const getPartyById = async (req: Request, res: Response) => {
 export const updateParty = async (req: Request, res: Response) => {
   try {
     const partyId = req.params.id;
-    const { name, gstType, gstin, ...otherAttributes } = req.body;
+    const {
+      name,
+      gstType,
+      gstin,
+      primaryContact,
+      alternateContact,
+      primaryEmail,
+      alternateEmail,
+      shippingAddress,
+      billingAddress,
+      companyId,
+      sameAsShipping,
+    } = req.body;
 
     // Validate required fields
     if (!name || !gstType || !gstin) {
@@ -82,7 +112,14 @@ export const updateParty = async (req: Request, res: Response) => {
         name,
         gstType,
         gstin,
-        ...otherAttributes,
+        primaryContact,
+        alternateContact,
+        primaryEmail,
+        alternateEmail,
+        shippingAddress,
+        billingAddress,
+        companyId,
+        sameAsShipping,
       },
       { where: { id: partyId } }
     );

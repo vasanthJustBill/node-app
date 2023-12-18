@@ -14,13 +14,14 @@ interface PartyAttributes {
   shippingAddress: string;
   billingAddress: string;
   companyId: number;
+  sameAsShipping: boolean;
 }
 
 class Party extends Model<PartyAttributes> implements PartyAttributes {
   public id!: number;
   public name!: string;
-  public gstType!: string;
-  public gstin!: number;
+  public gstType: string;
+  public gstin: number;
   public primaryContact: number;
   public alternateContact: number;
   public primaryEmail: string;
@@ -28,6 +29,7 @@ class Party extends Model<PartyAttributes> implements PartyAttributes {
   public shippingAddress: string;
   public billingAddress: string;
   public companyId!: number;
+  public sameAsShipping: boolean;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -128,6 +130,9 @@ class Party extends Model<PartyAttributes> implements PartyAttributes {
               msg: "Company ID cannot be empty",
             },
           },
+        },
+        sameAsShipping: {
+          type: DataTypes.BOOLEAN,
         },
       },
       {
